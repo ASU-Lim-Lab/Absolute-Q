@@ -30,7 +30,7 @@ df4 = pd.DataFrame()
 df5 = pd.DataFrame()
 df6 = pd.DataFrame()
 
-# Thresholds. 
+# Thresholds, adjust as needed. 
 microchambers_count = 20480 # Adjust for total number of microchambers. Ensures all microchamber data are accounted for. 
 fam_fluo_threshold = 15000
 vic_fluo_threshold = 2000
