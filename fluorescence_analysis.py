@@ -1,6 +1,7 @@
 # The purpose of this code is to sort Abolute Q csv output files, parse them for fluoresence values based on given thresholds,
-# and assign lineage predictions based on those values. 
-#
+# and assign lineage predictions based on those values. Output files were generated from samples using 3 (FAM, VIC, ABY/NED) and 
+# 2 (FAM, VIC) probes on ORF1a and Spike genes of SARS-CoV-2, respectively. 
+# 
 #
 
 from datetime import date, datetime
@@ -43,12 +44,12 @@ for file in files_3395:
 	i = file.split('_')	
 	print(i)
 	unique_id = pd.Series(i[0][2:4] + '_' + i[3])
-	total_datapoints_check = len(df.index)
+	total_datapoints_check = len(df.index) # Checks for total number of microchamers.
 	if total_datapoints_check == microchambers_count:
-		df = df[df.Reject != True]
+		df = df[df.Reject != True] # Removes any rejected microchambers.
 		if df.columns[7] == 'FAM_Target 1':
 			df = df.rename(columns = {'FAM_Target 1': 'FAM_Target_1'})
-			df = df[df.FAM_Target_1 > fam_fluo_threshold]
+			df = df[df.FAM_Target_1 > fam_fluo_threshold] # Respective probe threshold check.
 			passed_threshold = pd.Series(len(df.index)) 
 			fdf_id = pd.DataFrame(unique_id, columns = ['Unique_id'])
 			fdf_count = pd.DataFrame(passed_threshold, columns = ['3395_FAM_pos_count'])
@@ -67,7 +68,7 @@ for file in files_3395:
 			df = df[df.ABY_Target_3 > aby_fluo_threshold]
 			passed_threshold = pd.Series(len(df.index)) 
 			adf_id = pd.DataFrame(unique_id, columns = ['Unique_id'])
-			adf_count = pd.DataFrame(passed_threshold, columns = ['3395_NED_pos_count'])
+			adf_count = pd.DataFrame(passed_threshold, columns = ['3395_NED_pos_count']) # ABY probe name changed to NED.
 			adf = pd.concat([adf_id, adf_count], axis = 1)
 			df3 = pd.concat([df3, adf], axis = 0)
 
