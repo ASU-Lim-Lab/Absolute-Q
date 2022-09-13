@@ -1,8 +1,13 @@
+# The purpose of this code is to sort out Abolute Q csv output files, parse them for fluoresence values based on given thresholds,
+# and assign lineage predictions based on those values. 
+#
+#
+
 from datetime import date, datetime
 import pandas as pd
 import os
 
-directory_path = ()
+directory_path = () # add directory path.
 directory_files = os.listdir(directory_path)
 directory_files_list = [i for i in directory_files if i.endswith(('.csv'))]
 directory_files_list.sort(key = str.split)
@@ -25,13 +30,14 @@ df4 = pd.DataFrame()
 df5 = pd.DataFrame()
 df6 = pd.DataFrame()
 
-microchambers_count = 20480
+# Thresholds. 
+microchambers_count = 20480 # Adjust for total number of microchambers. Ensures all microchamber data are accounted for. 
 fam_fluo_threshold = 15000
 vic_fluo_threshold = 2000
 aby_fluo_threshold = 2300
-total_pos_microchambers_threshold = 5
+total_pos_microchambers_threshold = 5 # Adjust to determine limit of detection. 
 
-#reads file in directory and performs operations.
+#reads file in directory and performs operations to determine total microchambers that have passed their probe specific fluoresence thresholds.
 for file in files_3395:
 	df = pd.read_csv(file)
 	i = file.split('_')	
@@ -100,6 +106,8 @@ df4 = df4.set_index(['Unique_id'])
 df5 = df5.set_index(['Unique_id'])
 df6 = df4.join(df5)
 df0 = df0.join(df6)
+
+# Block below is used to predict the lineage. Values over/under total_pos_microchambers_threshold are considered ambiguous/undetermined. 
 
 df0['3395_lineage_prediction'] = 'Lineage'
 
