@@ -1,4 +1,4 @@
-# The purpose of this code is to sort out Abolute Q csv output files, parse them for fluoresence values based on given thresholds,
+# The purpose of this code is to sort Abolute Q csv output files, parse them for fluoresence values based on given thresholds,
 # and assign lineage predictions based on those values. 
 #
 #
