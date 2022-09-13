@@ -1,6 +1,6 @@
-# The purpose of this code is to sort Abolute Q csv output files, parse them for fluoresence values based on given thresholds,
-# and assign lineage predictions based on those values. Output files were generated from samples using 3 (FAM, VIC, ABY/NED) and 
-# 2 (FAM, VIC) probes on ORF1a and Spike genes of SARS-CoV-2, respectively. 
+# The purpose of this code is to sort Abolute Q csv output files, parse them for microchambers that passed given fluoresence values thresholds,
+# and assign lineage predictions based on the resulting values. Output files were generated from samples using 3 (FAM, VIC, ABY/NED) and 2
+# (FAM, VIC) probes on ORF1a and Spike genes of SARS-CoV-2, respectively. 
 # 
 #
 
