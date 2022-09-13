@@ -2,6 +2,6 @@
 
 File name formating should be consistant with the sample csv files.
 
-BT01_143_01_01_F.csv
+eg. BT01_143_01_01_F.csv
 
-"Test number"_"probe location"_"batch number"_"sample number".csv
+Information separated by underscore include test number (BT01), probe locaiton (143), batch number (01), sample number (01) and specific probe (F).
