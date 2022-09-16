@@ -1,4 +1,4 @@
-# The purpose of this script is to sort Abolute Q csv output files, parse them for microchambers that passed given fluoresence values thresholds,
+# The purpose of this script is to sort Abolute Q csv output files, parse them for microchambers that passed given fluoresence thresholds,
 # and assign lineage predictions based on the resulting values. Output files were generated from samples using 3 (FAM, VIC, ABY/NED) and 2
 # (FAM, VIC) probes on ORF1a and Spike genes of SARS-CoV-2, respectively. 
 # 
