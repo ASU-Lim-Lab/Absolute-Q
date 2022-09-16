@@ -2,7 +2,8 @@
 # and assign lineage predictions based on the resulting values. Output files were generated from samples using 3 (FAM, VIC, ABY/NED) and 2
 # (FAM, VIC) probes on ORF1a and Spike genes of SARS-CoV-2, respectively. 
 # 
-#
+# @ 3395 FAM = BA.1, VIC = Delta, ABY/NED = BA.2
+# @ 143 FAM = BA.1, VIC = Delta OR BA.2
 
 from datetime import date, datetime
 import pandas as pd
@@ -94,7 +95,7 @@ for file in files_143:
 			fdf_count = pd.DataFrame(passed_threshold, columns = ['143_FAM_pos_count'])
 			fdf = pd.concat([fdf_id, fdf_count], axis = 1)
 			df4 = pd.concat([df4, fdf], axis = 0)
-		elif df.columns[7] == 'VIC_Target 2':
+		elif df.columns[7] == 'VIC_Target 2': # VIC values at 143 correspond to either Delta OR BA.2.
 			df = df.rename(columns = {'VIC_Target 2': 'VIC_Target_2'})
 			df = df[df.VIC_Target_2 >= vic_fluo_threshold]
 			passed_threshold = pd.Series(len(df.index))
@@ -140,12 +141,5 @@ df0['143_lineage_prediction'].loc[(d) & (e)] = 'Undetermined'
 outdate = datetime.today().strftime('%Y_%m_%d')
 outfile = str('Combined_output')
 df0.to_csv(outfile + '_' + outdate + '.csv')
-
-
-
-
-
-
-
 
 
