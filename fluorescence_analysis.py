@@ -109,6 +109,7 @@ df6 = df4.join(df5)
 df0 = df0.join(df6)
 
 # Block below is used to predict the lineage. Values over/under total_pos_microchambers_threshold are considered ambiguous/undetermined. 
+# Blank cells return "Lineage" in prediction column. 
 
 df0['3395_lineage_prediction'] = 'Lineage'
 
@@ -125,7 +126,7 @@ df0['3395_lineage_prediction'].loc[(df0['3395_FAM_pos_count'] < total_pos_microc
 df0['143_lineage_prediction'] = 'Lineage'
 
 df0['143_lineage_prediction'].loc[(df0['143_FAM_pos_count'] >= total_pos_microchambers_threshold) & (df0['143_VIC_pos_count'] < total_pos_microchambers_threshold)] = 'BA.1'
-df0['143_lineage_prediction'].loc[(df0['143_FAM_pos_count'] <= total_pos_microchambers_threshold) & (df0['143_VIC_pos_count'] > total_pos_microchambers_threshold)] = 'Delta/BA.2'
+df0['143_lineage_prediction'].loc[(df0['143_FAM_pos_count'] < total_pos_microchambers_threshold) & (df0['143_VIC_pos_count'] >= total_pos_microchambers_threshold)] = 'Delta/BA.2'
 df0['143_lineage_prediction'].loc[(df0['143_FAM_pos_count'] >= total_pos_microchambers_threshold) & (df0['143_VIC_pos_count'] >= total_pos_microchambers_threshold)] = 'Ambiguous'
 df0['143_lineage_prediction'].loc[(df0['143_FAM_pos_count'] < total_pos_microchambers_threshold) & (df0['143_VIC_pos_count'] < total_pos_microchambers_threshold)] = 'Undetermined'
 
