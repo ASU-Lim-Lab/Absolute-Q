@@ -49,7 +49,7 @@ for file in files_3395:
 		df = df[df.Reject != True] # Removes any rejected microchambers.
 		if df.columns[7] == 'FAM_Target 1':
 			df = df.rename(columns = {'FAM_Target 1': 'FAM_Target_1'})
-			df = df[df.FAM_Target_1 > fam_fluo_threshold] # Respective probe threshold check.
+			df = df[df.FAM_Target_1 >= fam_fluo_threshold] # Respective probe threshold check.
 			passed_threshold = pd.Series(len(df.index)) 
 			fdf_id = pd.DataFrame(unique_id, columns = ['Unique_id'])
 			fdf_count = pd.DataFrame(passed_threshold, columns = ['3395_FAM_pos_count'])
@@ -57,7 +57,7 @@ for file in files_3395:
 			df1 = pd.concat([df1, fdf], axis = 0)
 		elif df.columns[7] == 'VIC_Target 2':
 			df = df.rename(columns = {'VIC_Target 2': 'VIC_Target_2'})
-			df = df[df.VIC_Target_2 > vic_fluo_threshold]
+			df = df[df.VIC_Target_2 >= vic_fluo_threshold]
 			passed_threshold = pd.Series(len(df.index))
 			vdf_id = pd.DataFrame(unique_id, columns = ['Unique_id'])
 			vdf_count = pd.DataFrame(passed_threshold, columns = ['3395_VIC_pos_count'])
@@ -65,7 +65,7 @@ for file in files_3395:
 			df2 = pd.concat([df2, vdf], axis = 0)
 		elif df.columns[7] == 'ABY_Target 3':
 			df = df.rename(columns = {'ABY_Target 3': 'ABY_Target_3'})
-			df = df[df.ABY_Target_3 > aby_fluo_threshold]
+			df = df[df.ABY_Target_3 >= aby_fluo_threshold]
 			passed_threshold = pd.Series(len(df.index)) 
 			adf_id = pd.DataFrame(unique_id, columns = ['Unique_id'])
 			adf_count = pd.DataFrame(passed_threshold, columns = ['3395_NED_pos_count']) # ABY probe name changed to NED.
@@ -88,7 +88,7 @@ for file in files_143:
 		df = df[df.Reject != True]
 		if df.columns[7] == 'FAM_Target 1':
 			df = df.rename(columns = {'FAM_Target 1': 'FAM_Target_1'})
-			df = df[df.FAM_Target_1 > fam_fluo_threshold]
+			df = df[df.FAM_Target_1 >= fam_fluo_threshold]
 			passed_threshold = pd.Series(len(df.index)) 
 			fdf_id = pd.DataFrame(unique_id, columns = ['Unique_id'])
 			fdf_count = pd.DataFrame(passed_threshold, columns = ['143_FAM_pos_count'])
@@ -96,7 +96,7 @@ for file in files_143:
 			df4 = pd.concat([df4, fdf], axis = 0)
 		elif df.columns[7] == 'VIC_Target 2':
 			df = df.rename(columns = {'VIC_Target 2': 'VIC_Target_2'})
-			df = df[df.VIC_Target_2 > vic_fluo_threshold]
+			df = df[df.VIC_Target_2 >= vic_fluo_threshold]
 			passed_threshold = pd.Series(len(df.index))
 			vdf_id = pd.DataFrame(unique_id, columns = ['Unique_id'])
 			vdf_count = pd.DataFrame(passed_threshold, columns = ['143_VIC_pos_count'])
@@ -111,24 +111,31 @@ df0 = df0.join(df6)
 # Block below is used to predict the lineage. Values over/under total_pos_microchambers_threshold are considered ambiguous/undetermined. 
 # Blank cells return "Lineage" in prediction column. 
 
+A = df0['3395_FAM_pos_count'] >= total_pos_microchambers_threshold 
+a = df0['3395_FAM_pos_count'] < total_pos_microchambers_threshold
+B = df0['3395_VIC_pos_count'] >= total_pos_microchambers_threshold
+b = df0['3395_VIC_pos_count'] < total_pos_microchambers_threshold
+C = df0['3395_NED_pos_count'] >= total_pos_microchambers_threshold
+c = df0['3395_NED_pos_count'] < total_pos_microchambers_threshold
+D = df0['143_FAM_pos_count'] >= total_pos_microchambers_threshold
+d = df0['143_FAM_pos_count'] < total_pos_microchambers_threshold
+E = df0['143_VIC_pos_count'] >= total_pos_microchambers_threshold
+e = df0['143_VIC_pos_count'] < total_pos_microchambers_threshold
+
 df0['3395_lineage_prediction'] = 'Lineage'
 
-df0['3395_lineage_prediction'].loc[(df0['3395_FAM_pos_count'] >= total_pos_microchambers_threshold) & (df0['3395_VIC_pos_count'] < total_pos_microchambers_threshold) & (df0['3395_NED_pos_count'] < total_pos_microchambers_threshold)] = 'BA.1'
-df0['3395_lineage_prediction'].loc[(df0['3395_FAM_pos_count'] < total_pos_microchambers_threshold) & (df0['3395_VIC_pos_count'] >= total_pos_microchambers_threshold) & (df0['3395_NED_pos_count'] < total_pos_microchambers_threshold)] = 'Delta'
-df0['3395_lineage_prediction'].loc[(df0['3395_FAM_pos_count'] < total_pos_microchambers_threshold) & (df0['3395_VIC_pos_count'] < total_pos_microchambers_threshold) & (df0['3395_NED_pos_count'] >= total_pos_microchambers_threshold)] = 'BA.2'
-df0['3395_lineage_prediction'].loc[
-(df0['3395_FAM_pos_count'] >= total_pos_microchambers_threshold) & (df0['3395_VIC_pos_count'] >= total_pos_microchambers_threshold) & (df0['3395_NED_pos_count'] >= total_pos_microchambers_threshold) |
-(df0['3395_FAM_pos_count'] <  total_pos_microchambers_threshold) & (df0['3395_VIC_pos_count'] >= total_pos_microchambers_threshold) & (df0['3395_NED_pos_count'] >= total_pos_microchambers_threshold) |
-(df0['3395_FAM_pos_count'] >= total_pos_microchambers_threshold) & (df0['3395_VIC_pos_count'] <  total_pos_microchambers_threshold) & (df0['3395_NED_pos_count'] >= total_pos_microchambers_threshold) |
-(df0['3395_FAM_pos_count'] >= total_pos_microchambers_threshold) & (df0['3395_VIC_pos_count'] >= total_pos_microchambers_threshold) & (df0['3395_NED_pos_count'] <  total_pos_microchambers_threshold)] = 'Ambiguous'
-df0['3395_lineage_prediction'].loc[(df0['3395_FAM_pos_count'] < total_pos_microchambers_threshold) & (df0['3395_VIC_pos_count'] < total_pos_microchambers_threshold) & (df0['3395_NED_pos_count'] < total_pos_microchambers_threshold)] = 'Undetermined'
+df0['3395_lineage_prediction'].loc[(A) & (b) & (c)] = 'BA.1'
+df0['3395_lineage_prediction'].loc[(a) & (B) & (c)] = 'Delta'
+df0['3395_lineage_prediction'].loc[(a) & (b) & (C)] = 'BA.2'
+df0['3395_lineage_prediction'].loc[(a) & (b) & (c)] = 'Undetermined'
+df0['3395_lineage_prediction'].loc[(A) & (B) & (C) |(a) & (B) & (C) |(A) & (b) & (C) |(A) & (B) & (c)] = 'Ambiguous'
 
 df0['143_lineage_prediction'] = 'Lineage'
 
-df0['143_lineage_prediction'].loc[(df0['143_FAM_pos_count'] >= total_pos_microchambers_threshold) & (df0['143_VIC_pos_count'] < total_pos_microchambers_threshold)] = 'BA.1'
-df0['143_lineage_prediction'].loc[(df0['143_FAM_pos_count'] < total_pos_microchambers_threshold) & (df0['143_VIC_pos_count'] >= total_pos_microchambers_threshold)] = 'Delta/BA.2'
-df0['143_lineage_prediction'].loc[(df0['143_FAM_pos_count'] >= total_pos_microchambers_threshold) & (df0['143_VIC_pos_count'] >= total_pos_microchambers_threshold)] = 'Ambiguous'
-df0['143_lineage_prediction'].loc[(df0['143_FAM_pos_count'] < total_pos_microchambers_threshold) & (df0['143_VIC_pos_count'] < total_pos_microchambers_threshold)] = 'Undetermined'
+df0['143_lineage_prediction'].loc[(D) & (e)] = 'BA.1'
+df0['143_lineage_prediction'].loc[(d) & (E)] = 'Delta/BA.2'
+df0['143_lineage_prediction'].loc[(D) & (E)] = 'Ambiguous'
+df0['143_lineage_prediction'].loc[(d) & (e)] = 'Undetermined'
 
 outdate = datetime.today().strftime('%Y_%m_%d')
 outfile = str('Combined_output')
