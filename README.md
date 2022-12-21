@@ -18,7 +18,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/ASU-Lim-Lab/Absolute-Q">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="logo.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">QuantStudio Absolute Q Digital PCR</h3>
