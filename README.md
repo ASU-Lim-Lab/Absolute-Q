@@ -104,7 +104,7 @@ All formatted csv files should reside in the same directory before running scrip
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Codon Analysis
-Printed output can be saved using shell command $ script.py > output.txt
+Printed output can be saved using CL command $ script.py > output.txt.
 Unhash df output for troubleshooting.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
