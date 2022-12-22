@@ -75,7 +75,6 @@ Scripts are comatable with Python 3.9.14+, Pandas 1.5.1+, Biopython 1.79+.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
 * [![Python][Python]][Python-url]
 * [![Pandas][Pandas]][Pandas-url]
 * [![Biopython][Biopython]][Biopython-url]
