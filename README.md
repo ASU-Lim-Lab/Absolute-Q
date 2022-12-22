@@ -71,8 +71,7 @@ Current efforts involve detection of SARS-CoV-2 spike mutations that enable mAb 
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+Scripts are comatable with Python 3.9.14+, Pandas 1.5.1+, Biopython 1.79+.
 
 ### Prerequisites
 
